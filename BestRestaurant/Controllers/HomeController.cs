@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using BestRestaurant.Models;
+using System.Collections.Generic;
 
 namespace BestRestaurant.Controllers
 {
@@ -9,8 +10,9 @@ namespace BestRestaurant.Controllers
         [HttpGet("/")]
         public ActionResult Index()
         {
-            Restaurant starterRestaurant = new Restaurant("Add first restaurant to the restaurant list");
-            return View(starterRestaurant);
+
+            List<Restaurant> allRestaurants = Restaurant.GetAll();
+            return View(allRestaurants);
         }
 
         [HttpGet("/restaurants/new")]
@@ -23,7 +25,7 @@ namespace BestRestaurant.Controllers
         public ActionResult Create(string description)
         {
             Restaurant myRestaurant = new Restaurant(description);
-            return View("Index", myRestaurant);
+            return RedirectToAction("Index");
         }
 
     }
